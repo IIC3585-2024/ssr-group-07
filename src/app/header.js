@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useAuth } from './context/auth';
+import { logOut } from '../lib/firebase/auth';
 
 export default function Header() {
     const { currentUser } = useAuth();
@@ -18,9 +19,7 @@ export default function Header() {
                             <Link href="/add-series">
                                 Add
                             </Link>
-                            <Link href="/logout">
-                                Logout
-                            </Link>
+                            <span onClick={() => logOut()}>Logout</span>
                         </div>
                     ) : (
                         <div>
