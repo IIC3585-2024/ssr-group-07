@@ -1,7 +1,6 @@
 'use client';
 import { useState } from "react";
-import Layout from "../../components/Layout";
-import { firestore } from "../../lib/firebase/config";
+import { firestore } from "@/lib/firebase/config";
 
 export default function AddSeriesPage() {
     const [title, setTitle] = useState("");
@@ -20,7 +19,7 @@ export default function AddSeriesPage() {
     }
 
     return (
-        <Layout>
+        <div>
             <h1>Add Series</h1>
             <form onSubmit={addSeries}>    
                 <input
@@ -49,6 +48,6 @@ export default function AddSeriesPage() {
                 />
                 <button type="submit">Add Series</button>
             </form>
-        </Layout>
+        </div>
     );
 }

@@ -1,7 +1,6 @@
 'use client'
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import Layout from '../../components/Layout';
 import { fetchSeries, fetchComments, addComment } from '@/lib/db/series';
 
 export default function SeriesPage() {
@@ -27,7 +26,7 @@ export default function SeriesPage() {
     }
 
     return (
-        <Layout>
+        <div>
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -55,6 +54,6 @@ export default function SeriesPage() {
                     <button onClick={addComment}>Add Comment</button>
                 </>
             )}
-        </Layout>
+        </div>
     );
 }
