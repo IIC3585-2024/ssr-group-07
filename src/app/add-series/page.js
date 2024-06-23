@@ -30,7 +30,7 @@ export default function AddSeriesPage() {
     }
 
     return (
-        <div>
+        <main>
             <h1>Add Series</h1>
             <input
                 type="text"
@@ -51,6 +51,6 @@ export default function AddSeriesPage() {
                     <SeriesCard key={index} series={series} id={series.id} onClick={() => setSelectedSeries(series)} />
                 ))}
             </div>
-        </div>
+        </main>
     );
 }

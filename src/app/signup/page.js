@@ -34,7 +34,7 @@ export default function SignInPage() {
 
 
     return (
-        <div>
+        <main>
             <h1>Register</h1>
             {errorMessage && <div className="error">{errorMessage}</div>
             }
@@ -68,6 +68,6 @@ export default function SignInPage() {
                 </div>
                 <button type="submit">Sign Up</button>
             </form>
-        </div>
+        </main>
     );
 }

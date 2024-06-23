@@ -29,7 +29,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div>
+        <main>
             <h1>Login</h1>
             {errorMessage && <div className="error">{errorMessage}</div>}
             <form onSubmit={onSubmit}>
@@ -53,6 +53,6 @@ export default function LoginPage() {
                 </div>
                 <button type="submit">Login</button>
             </form>
-        </div>
+        </main>
     );
 }

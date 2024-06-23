@@ -14,7 +14,7 @@ export default function SearchPage() {
     }
 
     return (
-        <div>
+        <main>
             <h1>Search</h1>
             <input
                 type="text"
@@ -46,6 +46,6 @@ export default function SearchPage() {
                     <li key={index}>{result.title} - {result.genre} - {result.service}</li>
                 ))}
             </ul>
-        </div>
+        </main>
     );
 }

@@ -26,7 +26,7 @@ export default function SeriesPage() {
     }
 
     return (
-        <div>
+        <main>
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -54,6 +54,6 @@ export default function SeriesPage() {
                     <button onClick={createComment}>Add Comment</button>
                 </>
             )}
-        </div>
+        </main>
     );
 }
