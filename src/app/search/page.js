@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react";
-import Layout from "../../components/Layout";
-import { search } from "../../db/search";
+import { search } from "@/lib/db/search";
 
 export default function SearchPage() {
     const [title, setTitle] = useState("");
@@ -15,7 +14,7 @@ export default function SearchPage() {
     }
 
     return (
-        <Layout>
+        <div>
             <h1>Search</h1>
             <input
                 type="text"
@@ -44,9 +43,9 @@ export default function SearchPage() {
             <button onClick={clientSearch}>Search</button>
             <ul>
                 {results.map((result, index) => (
-                    <li key={index}>{result.title}</li>
+                    <li key={index}>{result.title} - {result.genre} - {result.service}</li>
                 ))}
             </ul>
-        </Layout>
+        </div>
     );
 }

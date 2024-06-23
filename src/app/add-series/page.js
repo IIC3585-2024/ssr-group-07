@@ -1,54 +1,56 @@
 'use client';
+import { addSeries } from "@/lib/db/series";
 import { useState } from "react";
-import Layout from "../../components/Layout";
-import { firestore } from "../../lib/firebase/config";
+import getSeriesByName from "@/lib/api/getSeriesbyName";
+import SeriesCard from "./seriesCard";
 
 export default function AddSeriesPage() {
     const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [ imageUrl, setImageUrl] = useState("");
-    const [genre, setGenre] = useState("");
-    const [service, setService] = useState("");
+    const [ series, setSeries ] = useState([]);
+    const [ selectedSeries, setSelectedSeries ] = useState(null);
 
-    const addSeries = async () => {
-        await firestore.collection("series").add({
-            title,
-            description,
-            genre,
-            service
-        });
+    // search for series in API, then add to database
+    const addSeriesDB = async () => {
+        const rating = 0;
+        const rating_count = 0;
+        await addSeries(
+            selectedSeries.id,
+            selectedSeries.name,
+            rating,
+            rating_count,
+            selectedSeries.overview,
+            selectedSeries.genre_names
+        );
+    }
+
+    // search for series in API
+    const searchSeries = async () => {
+        const series = await getSeriesByName(title);
+        setSeries(series);
     }
 
     return (
-        <Layout>
+        <div>
             <h1>Add Series</h1>
-            <form onSubmit={addSeries}>    
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Genre"
-                    value={genre}
-                    onChange={(e) => setGenre(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Service"
-                    value={service}
-                    onChange={(e) => setService(e.target.value)}
-                />
-                <button type="submit">Add Series</button>
-            </form>
-        </Layout>
+            <input
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={e => setTitle(e.target.value)}
+            />
+            <button onClick={searchSeries}>Search</button>
+            {selectedSeries && (
+                <div>
+                    <h2>{selectedSeries.title}</h2>
+                    <p>{selectedSeries.description}</p>
+                    <button onClick={addSeriesDB}>Add Series</button>
+                </div>
+            )}
+            <div>
+                {series.map((series, index) => (
+                    <SeriesCard key={index} series={series} id={series.id} onClick={() => setSelectedSeries(series)} />
+                ))}
+            </div>
+        </div>
     );
 }

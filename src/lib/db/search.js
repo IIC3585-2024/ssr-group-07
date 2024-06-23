@@ -1,21 +1,24 @@
 'use server';
 import { db } from "../firebase/config";
+import { collection, addDoc, getDocs, getDoc, doc, query, where } from "firebase/firestore";
 
 export const search = async (title, genre, service, rating) => {
-    let query = db.collection("series");
+    const seriesRef = collection(db, "series");
+    let queries = [];
     if (title) {
-        query = query.where("title", "==", title);
+        queries.push(where("title", "==", title));
     }
     if (genre) {
-        query = query.where("genre", "==", genre);
+        queries.push(where("genre", "==", genre));
     }
     if (service) {
-        query = query.where("service", "==", service);
+        queries.push(where("service", "==", service));
     }
     if (rating) {
-        query = query.where("rating", ">=", rating);
+        queries.push(where("rating", ">=", rating));
     }
-    const snapshot = await query.get();
+    const q = query(seriesRef, ...queries);
+    const snapshot = await getDocs(q);
     const data = snapshot.docs.map(doc => doc.data());
     return data;
 }

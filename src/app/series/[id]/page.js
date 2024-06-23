@@ -1,7 +1,6 @@
 'use client'
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import Layout from '../../components/Layout';
 import { fetchSeries, fetchComments, addComment } from '@/lib/db/series';
 
 export default function SeriesPage() {
@@ -21,13 +20,13 @@ export default function SeriesPage() {
 
     const addComment = async () => {
         await addComment(id, comment, rating);
-        fetchComments(id).then(setComments);
         setComment("");
         setRating(0);
+        fetchComments(id).then(setComments);
     }
 
     return (
-        <Layout>
+        <div>
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -52,9 +51,9 @@ export default function SeriesPage() {
                         value={rating}
                         onChange={e => setRating(e.target.value)}
                     />
-                    <button onClick={addComment}>Add Comment</button>
+                    <button onClick={createComment}>Add Comment</button>
                 </>
             )}
-        </Layout>
+        </div>
     );
 }
