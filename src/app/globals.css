@@ -133,7 +133,7 @@ main {
 
 .input-dropdown {
     background-color: #2f2f2f;
-    appearance: none;
+    appearance: auto;
     border: 0;
     border-radius: 4px;
     padding: 0.5rem;
@@ -143,6 +143,11 @@ main {
 .input-dropdown:focus {
     outline: solid;
     outline-color: hsla(160, 100%, 37%, 1);
+}
+
+.input-dropdown option {
+  background-color: #2f2f2f;
+  color: rgba(235, 235, 235, .6);
 }
 
 .btn {

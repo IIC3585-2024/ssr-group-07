@@ -36,7 +36,7 @@ export default function SearchPage() {
                 value={text}
                 onChange={e => setText(e.target.value)}
             />
-            <select onChange={e => setQueryField(e.target.value)}>
+            <select className="input-dropdown" onChange={e => setQueryField(e.target.value)}>
                 <option value="title">Title</option>
                 <option value="genre">Genre</option>
                 <option value="service">Service</option>
@@ -48,11 +48,11 @@ export default function SearchPage() {
                 value={rating}
                 onChange={e => setRating(e.target.value)}
             />
-            <select onChange={e => setOrder(e.target.value)}>
+            <select className="input-dropdown" onChange={e => setOrder(e.target.value)}>
                 <option value="desc">Descending</option>
                 <option value="asc">Ascending</option>
             </select>
-            <button onClick={clientSearch}>Search</button>
+            <button className="btn margin-5" onClick={clientSearch}>Search</button>
             {errorMessage && <p>{errorMessage}</p>}
             <ul>
                 {results.map((result, index) => (
