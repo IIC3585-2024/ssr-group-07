@@ -34,11 +34,12 @@ export default function AddSeriesPage() {
             <h1>Add Series</h1>
             <input
                 type="text"
+                className="input-text-field margin-5"
                 placeholder="Title"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
             />
-            <button onClick={searchSeries}>Search</button>
+            <button className="btn margin-5" onClick={searchSeries}>Search</button>
             {selectedSeries && (
                 <div>
                     <h2>{selectedSeries.title}</h2>
