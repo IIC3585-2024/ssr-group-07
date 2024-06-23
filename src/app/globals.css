@@ -93,6 +93,8 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  text-align: center;
 }
 
 a {
@@ -108,4 +110,51 @@ a {
 
 main {
   margin-top: 100px;
+}
+
+#search-title {
+    margin-top: 0.5rem;
+}
+
+.input-text-field {
+    background-color: #2f2f2f;
+    appearance: none;
+    border: 0;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: rgba(235, 235, 235, .6);
+}
+
+.input-text-field:focus {
+    outline: solid;
+    outline-color: hsla(160, 100%, 37%, 1);
+}
+
+.input-dropdown {
+    background-color: #2f2f2f;
+    appearance: none;
+    border: 0;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: rgba(235, 235, 235, .6);
+}
+
+.input-dropdown:focus {
+    outline: solid;
+    outline-color: hsla(160, 100%, 37%, 1);
+}
+
+.btn {
+    font-weight: semibold;
+    background-color: hsla(160, 100%, 37%, 1);
+    appearance: none;
+    border: 0;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: rgba(255, 255, 255, .9);
+}
+
+.btn:hover {
+    background-color: hsla(160, 100%, 40%, 1);
+    cursor: pointer;
 }

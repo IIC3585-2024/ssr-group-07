@@ -15,7 +15,7 @@ export default function Header() {
                     
                     <Link className={styles.navtab} href="/search">Search</Link>
                 
-                    <Link className={styles.navtab} href="/add-series">Add</Link>
+                    <Link className={styles.navtab} href="/add-series">Add Serie</Link>
                 
                     <span className={styles.navtab} onClick={() => logOut()}>Logout</span>
                 </div>
