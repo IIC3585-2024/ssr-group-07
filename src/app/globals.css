@@ -164,3 +164,12 @@ main {
     background-color: hsla(160, 100%, 40%, 1);
     cursor: pointer;
 }
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px;
+}
