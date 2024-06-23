@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import { search } from "@/lib/db/search";
+import SeriesCard from "./seriesCard";
 
 export default function SearchPage() {
     const [text, setText] = useState("");
@@ -54,20 +55,13 @@ export default function SearchPage() {
             </select>
             <button className="btn margin-5" onClick={clientSearch}>Search</button>
             {errorMessage && <p>{errorMessage}</p>}
-            <ul>
+            <div class="results-container">
+                <div class="gallery">
                 {results.map((result, index) => (
-                    <li key={index}>
-                        <h2>{result.title}</h2>
-                        {result.rating_count > 0 && (
-                            <>
-                            <p>Rating: {result.rating}</p>
-                            <p>Rating Count: {result.rating_count} </p>
-                            </>
-                        )}
-                        <p>Genres: {result.genres}</p>
-                    </li>
+                    <SeriesCard key={index} series={result} id={result.id} />
                 ))}
-            </ul>
+                </div>
+            </div>
         </main>
     );
 }
