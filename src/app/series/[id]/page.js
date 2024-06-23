@@ -20,9 +20,9 @@ export default function SeriesPage() {
 
     const addComment = async () => {
         await addComment(id, comment, rating);
-        fetchComments(id).then(setComments);
         setComment("");
         setRating(0);
+        fetchComments(id).then(setComments);
     }
 
     return (
@@ -51,7 +51,7 @@ export default function SeriesPage() {
                         value={rating}
                         onChange={e => setRating(e.target.value)}
                     />
-                    <button onClick={addComment}>Add Comment</button>
+                    <button onClick={createComment}>Add Comment</button>
                 </>
             )}
         </div>

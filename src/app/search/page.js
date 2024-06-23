@@ -43,7 +43,7 @@ export default function SearchPage() {
             <button onClick={clientSearch}>Search</button>
             <ul>
                 {results.map((result, index) => (
-                    <li key={index}>{result.title}</li>
+                    <li key={index}>{result.title} - {result.genre} - {result.service}</li>
                 ))}
             </ul>
         </div>
