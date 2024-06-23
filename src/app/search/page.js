@@ -3,14 +3,27 @@ import { useState } from "react";
 import { search } from "@/lib/db/search";
 
 export default function SearchPage() {
-    const [title, setTitle] = useState("");
-    const [genre, setGenre] = useState("");
-    const [service, setService] = useState("");
+    const [text, setText] = useState("");
+    const [queryField, setQueryField] = useState("title");
     const [rating, setRating] = useState("");
+    const [order, setOrder] = useState("desc");
+    const [errorMessage, setErrorMessage] = useState("");
     const [results, setResults] = useState([]);
 
     const clientSearch = () => {
-        search(title, genre, service, rating).then(setResults);
+        if (!text && !rating && !order) {
+            setErrorMessage("Please enter a search term");
+            return;
+        }
+        search(text, queryField, rating, order).then((res) => {
+            if (res.length === 0) {
+                setResults([]);
+                setErrorMessage("No results found");
+            } else {
+                setResults(res);
+                setErrorMessage("");
+            }
+        });
     }
 
     return (
@@ -19,24 +32,15 @@ export default function SearchPage() {
             <input
                 className="input-text-field margin-5"
                 type="text"
-                placeholder="Title"
-                value={title}
-                onChange={e => setTitle(e.target.value)}
+                placeholder="Search"
+                value={text}
+                onChange={e => setText(e.target.value)}
             />
-            <input
-                className="input-text-field margin-5"
-                type="text"
-                placeholder="Genre"
-                value={genre}
-                onChange={e => setGenre(e.target.value)}
-            />
-            <input
-                className="input-text-field margin-5"
-                type="text"
-                placeholder="Service"
-                value={service}
-                onChange={e => setService(e.target.value)}
-            />
+            <select onChange={e => setQueryField(e.target.value)}>
+                <option value="title">Title</option>
+                <option value="genre">Genre</option>
+                <option value="service">Service</option>
+            </select>
             <input
                 className="input-text-field margin-5"
                 type="number"
@@ -44,10 +48,24 @@ export default function SearchPage() {
                 value={rating}
                 onChange={e => setRating(e.target.value)}
             />
-            <button className="btn margin-5"  onClick={clientSearch}>Search</button>
+            <select onChange={e => setOrder(e.target.value)}>
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+            </select>
+            <button onClick={clientSearch}>Search</button>
+            {errorMessage && <p>{errorMessage}</p>}
             <ul>
                 {results.map((result, index) => (
-                    <li key={index}>{result.title} - {result.genre} - {result.service}</li>
+                    <li key={index}>
+                        <h2>{result.title}</h2>
+                        {result.rating_count > 0 && (
+                            <>
+                            <p>Rating: {result.rating}</p>
+                            <p>Rating Count: {result.rating_count} </p>
+                            </>
+                        )}
+                        <p>Genres: {result.genres}</p>
+                    </li>
                 ))}
             </ul>
         </main>

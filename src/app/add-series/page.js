@@ -1,7 +1,7 @@
 'use client';
 import { addSeries } from "@/lib/db/series";
 import { useState } from "react";
-import getSeriesByName from "@/lib/api/getSeriesbyName";
+import getSeriesByName from "@/lib/api/getSeriesByName";
 import SeriesCard from "./seriesCard";
 
 export default function AddSeriesPage() {
@@ -18,8 +18,8 @@ export default function AddSeriesPage() {
             selectedSeries.name,
             rating,
             rating_count,
-            selectedSeries.overview,
-            selectedSeries.genre_names
+            selectedSeries.genre_names,
+            selectedSeries.poster_path
         );
     }
 
