@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link';
 import { useState } from "react";
 import { search } from "@/lib/db/search";
 import SeriesCard from "./seriesCard";
@@ -58,7 +59,14 @@ export default function SearchPage() {
             <div class="results-container">
                 <div class="gallery">
                 {results.map((result, index) => (
-                    <SeriesCard key={index} series={result} id={result.id} />
+                    <Link href={`/series/${result.id}`}>
+                        <SeriesCard 
+                            key={index}
+                            series={result}
+                            id={result.id}
+                        />
+                    </Link>
+                    
                 ))}
                 </div>
             </div>
