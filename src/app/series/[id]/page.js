@@ -45,7 +45,7 @@ export default function SeriesPage() {
     }
 
     return (
-        <div>
+        <main>
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -86,6 +86,6 @@ export default function SeriesPage() {
                     )}
                 </>
             )}
-        </div>
+        </main>
     );
 }

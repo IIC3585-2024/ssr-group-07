@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import { search } from "@/lib/db/search";
+import SeriesCard from "./seriesCard";
 
 export default function SearchPage() {
     const [text, setText] = useState("");
@@ -27,45 +28,40 @@ export default function SearchPage() {
     }
 
     return (
-        <div>
+        <main>
             <h1>Search</h1>
             <input
+                className="input-text-field margin-5"
                 type="text"
                 placeholder="Search"
                 value={text}
                 onChange={e => setText(e.target.value)}
             />
-            <select onChange={e => setQueryField(e.target.value)}>
+            <select className="input-dropdown" onChange={e => setQueryField(e.target.value)}>
                 <option value="title">Title</option>
                 <option value="genre">Genre</option>
                 <option value="service">Service</option>
             </select>
             <input
+                className="input-text-field margin-5"
                 type="number"
                 placeholder="Rating"
                 value={rating}
                 onChange={e => setRating(e.target.value)}
             />
-            <select onChange={e => setOrder(e.target.value)}>
+            <select className="input-dropdown" onChange={e => setOrder(e.target.value)}>
                 <option value="desc">Descending</option>
                 <option value="asc">Ascending</option>
             </select>
-            <button onClick={clientSearch}>Search</button>
+            <button className="btn margin-5" onClick={clientSearch}>Search</button>
             {errorMessage && <p>{errorMessage}</p>}
-            <ul>
+            <div class="results-container">
+                <div class="gallery">
                 {results.map((result, index) => (
-                    <li key={index}>
-                        <h2>{result.title}</h2>
-                        {result.rating_count > 0 && (
-                            <>
-                            <p>Rating: {result.rating}</p>
-                            <p>Rating Count: {result.rating_count} </p>
-                            </>
-                        )}
-                        <p>Genres: {result.genres}</p>
-                    </li>
+                    <SeriesCard key={index} series={result} id={result.id} />
                 ))}
-            </ul>
-        </div>
+                </div>
+            </div>
+        </main>
     );
 }

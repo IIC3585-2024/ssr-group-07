@@ -1,0 +1,22 @@
+.series-card {
+    background-color: #2f2f2f;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px;
+    margin: 10px;
+    width: 16rem;
+    text-align: center;
+    text-wrap: wrap;
+    height: auto;
+}
+
+.series-card:hover {
+    cursor: pointer;
+}
+
+.cover {
+    /* max height of 260px */
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}

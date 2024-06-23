@@ -30,15 +30,16 @@ export default function AddSeriesPage() {
     }
 
     return (
-        <div>
+        <main>
             <h1>Add Series</h1>
             <input
                 type="text"
+                className="input-text-field margin-5"
                 placeholder="Title"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
             />
-            <button onClick={searchSeries}>Search</button>
+            <button className="btn margin-5" onClick={searchSeries}>Search</button>
             {selectedSeries && (
                 <div>
                     <h2>{selectedSeries.title}</h2>
@@ -46,11 +47,13 @@ export default function AddSeriesPage() {
                     <button onClick={addSeriesDB}>Add Series</button>
                 </div>
             )}
-            <div>
+            <div class="results-container">
+                <div class="gallery">
                 {series.map((series, index) => (
                     <SeriesCard key={index} series={series} id={series.id} onClick={() => setSelectedSeries(series)} />
                 ))}
+                </div>
             </div>
-        </div>
+        </main>
     );
 }

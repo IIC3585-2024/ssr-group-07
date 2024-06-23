@@ -1,5 +1,7 @@
 export default function Page() {
   return (
-      <h1>Series Recomendation App</h1>
+      <main>
+        <h1>Series Recomendation App</h1>
+      </main>
   );
 }

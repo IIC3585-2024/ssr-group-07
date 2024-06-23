@@ -93,6 +93,8 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  text-align: center;
 }
 
 a {
@@ -104,4 +106,70 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+main {
+  margin-top: 100px;
+}
+
+.margin-5 {
+  margin: 5px;
+}
+
+.input-text-field {
+    background-color: #2f2f2f;
+    appearance: none;
+    border: 0;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: rgba(235, 235, 235, .6);
+    margin: 5px;
+}
+
+.input-text-field:focus {
+    outline: solid;
+    outline-color: hsla(160, 100%, 37%, 1);
+}
+
+.input-dropdown {
+    background-color: #2f2f2f;
+    appearance: auto;
+    border: 0;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: rgba(235, 235, 235, .6);
+}
+
+.input-dropdown:focus {
+    outline: solid;
+    outline-color: hsla(160, 100%, 37%, 1);
+}
+
+.input-dropdown option {
+  background-color: #2f2f2f;
+  color: rgba(235, 235, 235, .6);
+}
+
+.btn {
+    font-weight: semibold;
+    background-color: hsla(160, 100%, 37%, 1);
+    appearance: none;
+    border: 0;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: rgba(255, 255, 255, .9);
+}
+
+.btn:hover {
+    background-color: hsla(160, 100%, 40%, 1);
+    cursor: pointer;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px;
 }
