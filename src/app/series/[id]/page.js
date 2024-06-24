@@ -7,7 +7,7 @@ import { useAuth } from '../../context/auth';
 export default function SeriesPage() {
     const { currentUser } = useAuth();
     const { id } = useParams();
-    const [series, setSeries] = useState(null);
+    const [series, setSeries] = useState({});
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(0);
@@ -15,11 +15,11 @@ export default function SeriesPage() {
 
     useEffect(() => {
         fetchSeries(id).then((series) => {
-            if (series.length === 0) {
+            if (!series) {
                 setLoading(false);
                 return;
             }
-            setSeries(series[0]);
+            setSeries(series);
             setLoading(false);
         });
     }, [id]);
@@ -35,11 +35,11 @@ export default function SeriesPage() {
         fetchComments(id).then(setComments);
         
         fetchSeries(id).then((series) => {
-            if (series.length === 0) {
+            if (!series) {
                 setLoading(false);
                 return;
             }
-            setSeries(series[0]);
+            setSeries(series);
             setLoading(false);
         });
     }
@@ -50,7 +50,7 @@ export default function SeriesPage() {
                 <p>Loading...</p>
             ) : (
                 <>
-                    {series.length === 0 ? (
+                    {!series || !series.title ? (
                         <p>Series not found</p>
                     ) : (
                         <div>
@@ -58,7 +58,7 @@ export default function SeriesPage() {
                             <p>{series.description}</p>
                             <p>Rating: {series.rating}</p>
                             <p>Rating Count: {series.rating_count}</p>
-                            <p>Genres: {series.genres}</p>
+                            <p>Genres: {series.genres.join(', ')}</p>
                             <h2>Comments</h2>
                             <ul>
                                 {comments && comments.map((comment, index) => (
@@ -79,7 +79,7 @@ export default function SeriesPage() {
                                 type="number"
                                 placeholder="Rating"
                                 value={rating}
-                                onChange={e => setRating(e.target.value)}
+                                onChange={e => setRating(parseInt(e.target.value))}
                             />
                             <button onClick={createComment}>Add Comment</button>
                         </div>
