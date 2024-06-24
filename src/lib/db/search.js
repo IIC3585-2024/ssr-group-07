@@ -23,7 +23,7 @@ export const search = async (text, queryField, rating, order, genres, providers)
         const seriesRef = collection(db, "series");
         let queries = [];
         queries.push(where("rating", ">=", rating));
-        const q = query(seriesRef, queries);
+        const q = query(seriesRef, ...queries);
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => doc.data());
 
@@ -66,7 +66,7 @@ export const search = async (text, queryField, rating, order, genres, providers)
         if (rating) {
             queries.push(where("rating", ">=", parseInt(rating)));
         }
-        const q = query(seriesRef, queries);
+        const q = query(seriesRef, ...queries);
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => doc.data());
         // merge data
@@ -81,7 +81,6 @@ export const search = async (text, queryField, rating, order, genres, providers)
         if (order) {
             if (order === "asc") {
                 const sortedData = joinedData.sort((a, b) => a.rating - b.rating);
-                console.log(joinedData);
                 return sortedData;
             } else {
                 const sortedData = joinedData.sort((a, b) => b.rating - a.rating);
@@ -108,7 +107,7 @@ export const search = async (text, queryField, rating, order, genres, providers)
         if (rating) {
             queries.push(where("rating", ">=", parseInt(rating)));
         }
-        const q = query(seriesRef, queries);
+        const q = query(seriesRef, ...queries);
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => doc.data());
         // merge data
@@ -136,17 +135,19 @@ export const search = async (text, queryField, rating, order, genres, providers)
     if (rating) {
         // get db data
         const seriesRef = collection(db, "series");
-        const q = query(seriesRef, where("rating", ">=", parseInt(rating)));
+        let queries = [];
+        queries.push(where("rating", ">=", parseInt(rating)));
         if (order) {
             if (order === "asc") {
-                orderBy("rating");
-            } else {
-                orderBy("rating", "desc");
+                queries.push(orderBy("rating", "asc"));
+            } else if (order === "desc") {
+                queries.push(orderBy("rating", "desc"));
             }
         }
+
+        const q = query(seriesRef, ...queries);
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => doc.data());
-        console.log(data);
         return data;
     }
     return [];
