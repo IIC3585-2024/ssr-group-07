@@ -77,8 +77,7 @@
     margin-top: 2rem;
 }
 
-/* Styles for each comment item */
-.commentItem {
+.comment-item {
     margin-bottom: 20px;
     border-radius: 5px;
     padding: 10px;
@@ -86,25 +85,21 @@
     color: rgb(235, 235, 235);
 }
 
-/* Styles for comment text */
-.commentText {
+.comment-text {
     margin-bottom: 8px;
 }
 
-/* Styles for comment metadata */
-.commentMeta {
+.comment-meta {
     display: flex;
     justify-content: space-between;
     color: #888;
     margin-bottom: 0.5rem;
 }
 
-/* Styles for rating */
-.commentRating {
+.comment-rating {
     color: #f5c518;
 }
 
-/* Styles for username */
-.commentBy {
+.comment-by {
     font-weight: 500;
 }

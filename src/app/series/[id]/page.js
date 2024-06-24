@@ -110,13 +110,13 @@ export default function SeriesPage() {
 
         <div className={styles["comments-container"]}>
             {comments && comments.map((comment, index) => (
-                <div key={index} className={styles["commentItem"]}>
-                    <div className={styles["commentContent"]}>
-                        <div className={styles["commentMeta"]}>
-                            <h3 className={styles["commentBy"]}>{comment.username}</h3>
-                            <span className={styles["commentRating"]}>{renderStars(comment.rating)}</span>
+                <div key={index} className={styles["comment-item"]}>
+                    <div className={styles["comment-content"]}>
+                        <div className={styles["comment-meta"]}>
+                            <h3 className={styles["comment-by"]}>{comment.username}</h3>
+                            <span className={styles["comment-rating"]}>{renderStars(comment.rating)}</span>
                         </div>
-                        <p className={styles["commentText"]}>{comment.comment}</p>
+                        <p className={styles["comment-text"]}>{comment.comment}</p>
                     </div>
                 </div>
             ))}
