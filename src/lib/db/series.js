@@ -84,7 +84,7 @@ export const addComment = async (id, comment, rating, username, email) => {
     const querySnapshot = await getDocs(q);
     const seriesData = querySnapshot.docs[0].data();
     const seriesRef = doc(seriesCollection, querySnapshot.docs[0].id);
-    const newRating = (seriesData.rating * seriesData.rating_count + rating) / (seriesData.rating_count + 1);
+    const newRating = (parseInt(seriesData.rating) * parseInt(seriesData.rating_count) + parseInt(rating)) / (seriesData.rating_count + 1);
     const newRatingCount = seriesData.rating_count + 1;
     await updateDoc(seriesRef, {
         rating: newRating,
