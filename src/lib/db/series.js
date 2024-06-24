@@ -1,6 +1,7 @@
 'use server'
 import { db } from "../firebase/config";
 import getSeriesInfo from '@/lib/api/getSeriesInfo';
+import getProvidersById from '@/lib/api/getProvidersById';
 import { collection, addDoc, getDocs, getDoc, doc, updateDoc, arrayUnion, query, where } from "firebase/firestore";
 
 export const addSeries = async (seriesId, title, rating, rating_count, genres, poster_path) => {
@@ -9,6 +10,7 @@ export const addSeries = async (seriesId, title, rating, rating_count, genres, p
 
     // search for providers by seriesId in API
     let providers = await getProvidersById(seriesId);
+    console.log(providers);
     providers = providers.map(provider => provider.provider_name);
 
     // add series to db
@@ -59,6 +61,7 @@ export const fetchSeries = async (id) => {
         poster_path: data[0].poster_path
     }
 }
+
 export const fetchComments = async (id) => {
     // fetch comments by seriesId
     const commentsCollection = collection(db, "comments");
