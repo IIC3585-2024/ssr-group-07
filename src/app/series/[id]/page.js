@@ -79,7 +79,7 @@ export default function SeriesPage() {
             <div className={styles["ratings-container"]}>
             <ul className={styles["ratings"]}>
                 <li className={styles["rating-avg"]}>
-                {renderStars(series.rating)} <span className={styles["average"]}>{series.rating}</span>
+                {renderStars(series.rating)} <span className={styles["average"]}>{series.rating.toFixed(1)}</span>
                 </li>
             </ul>
             <p>{series.rating_count} Ratings</p>
