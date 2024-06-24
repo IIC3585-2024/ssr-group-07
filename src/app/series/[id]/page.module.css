@@ -1,0 +1,111 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.serie-detail-container {
+    width: 80%;
+    margin: 0 10%;
+}
+
+.cover {
+    max-height: 25rem;
+    width: auto;
+    margin-right: 3rem;
+    margin-top: 0.9rem;
+}
+
+.publish-year {
+    margin-top: 0.5rem;
+}
+
+.ratings-container {
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+.ratings {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: 0.3rem;
+}
+
+.rating-avg {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+}
+
+.star {
+    font-size: 1.2em;
+}
+
+.average {
+    margin-left: 0.3rem;
+}
+
+.description {
+    margin-top: 1rem;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    text-align: justify;
+}
+
+.comments-section {
+    text-align: left;
+}
+
+.comment-form {
+    display: table-caption
+}
+
+.textarea {
+    width: 80vw;
+    min-height: 4rem;
+}
+
+.comments-container {
+    margin-top: 2rem;
+}
+
+/* Styles for each comment item */
+.commentItem {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #2f2f2f;
+    color: rgb(235, 235, 235);
+}
+
+/* Styles for comment text */
+.commentText {
+    margin-bottom: 8px;
+}
+
+/* Styles for comment metadata */
+.commentMeta {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+/* Styles for rating */
+.commentRating {
+    color: #f5c518;
+}
+
+/* Styles for username */
+.commentBy {
+    font-weight: 500;
+    color: hsla(160, 100%, 37%, 1);
+}
