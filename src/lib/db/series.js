@@ -7,13 +7,19 @@ export const addSeries = async (seriesId, title, rating, rating_count, genres, p
     // separate genres to array
     const genreList = genres.split(", ");
 
+    // search for providers by seriesId in API
+    let providers = await getProvidersById(seriesId);
+    providers = providers.map(provider => provider.provider_name);
+
+    // add series to db
     await addDoc(collection(db, "series"), {
         seriesId,
         title,
         rating,
         rating_count,
         genres: genreList,
-        poster_path
+        poster_path,
+        providers
     });
 }
 
@@ -28,14 +34,18 @@ export const fetchSeries = async (id) => {
     // search api for series by id
     const apiData = await getSeriesInfo(id);
 
+    // obtain genre names from genres
+    const genreNames = apiData.genres.map(genre => genre.name).join(", ");
+    
+
     if (data.length === 0) {
-        await addSeries(id, apiData.name, 0, 0, apiData.genre_names, apiData.poster_path);
+        await addSeries(parseInt(id), apiData.name, 0, 0, genreNames, apiData.poster_path);
         return {
             title: apiData.name,
             description: apiData.overview,
             rating: 0,
             rating_count: 0,
-            genres: apiData.genre_names,
+            genres: genreNames.split(", "),
             poster_path: apiData.poster_path,
         }
     }
