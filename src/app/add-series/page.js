@@ -47,8 +47,8 @@ export default function AddSeriesPage() {
                     <button onClick={addSeriesDB}>Add Series</button>
                 </div>
             )}
-            <div class="results-container">
-                <div class="gallery">
+            <div className="results-container">
+                <div className="gallery">
                 {series.map((series, index) => (
                     <SeriesCard key={index} series={series} id={series.id} onClick={() => setSelectedSeries(series)} />
                 ))}
