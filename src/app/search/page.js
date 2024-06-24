@@ -3,8 +3,6 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { search } from "@/lib/db/search";
 import SeriesCard from "./seriesCard";
-import getGenres from '@/lib/api/getGenres';
-import getProviders from '@/lib/api/getProviders';
 
 export default function SearchPage() {
     const [text, setText] = useState("");
@@ -21,7 +19,7 @@ export default function SearchPage() {
             setErrorMessage("Please enter a search term");
             return;
         }
-        search(text, queryField, rating, order).then((res) => {
+        search(text, queryField, rating, order, genres, providers).then(res => {
             if (res.length === 0) {
                 setResults([]);
                 setErrorMessage("No results found");
@@ -33,12 +31,12 @@ export default function SearchPage() {
     }
 
     useEffect(() => {
-        getGenres().then((res) => {
-            setGenres(res);
-        });
-        getProviders().then((res) => {
-            setProviders(res);
-        });
+        fetch("/api/genres")
+            .then(res => res.json())
+            .then(data => setGenres(data));
+        fetch("/api/providers")
+            .then(res => res.json())
+            .then(data => setProviders(data));
     }, []);
 
     function showSpecificSearch() {
@@ -54,17 +52,17 @@ export default function SearchPage() {
             )
         } else if (queryField === 'genre' && genres.length > 0) {
             return (
-                <select className="input-dropdown">
+                <select className="input-dropdown" onChange={e => setText(e.target.value)}>
                     {genres.map((genre, index) => (
-                        <option key={index} value={genre.name}>{genre.name}</option>
+                        <option key={index} value={genre.id}>{genre.name}</option>
                     ))}
                 </select>
             )
         } else if (queryField === 'service' && providers.length > 0) {
             return (
-                <select className="input-dropdown">
+                <select className="input-dropdown" onChange={e => setText(e.target.value)}>
                     {providers.map((provider, index) => (
-                        <option key={index} value={provider.provider_name}>{provider.provider_name}</option>
+                        <option key={index} value={provider.provider_id}>{provider.provider_name}</option>
                     ))}
                 </select>
             )
