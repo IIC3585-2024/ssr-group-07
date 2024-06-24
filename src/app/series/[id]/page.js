@@ -39,7 +39,7 @@ export default function SeriesPage() {
 
     const renderStars = (rating) => {
         const filledStars = Math.floor(rating);
-        const emptyStars = 5 - filledStars;
+        const emptyStars = 10 - filledStars;
         return (
             <div>
                 {Array.from({ length: filledStars }).map((_, index) => (
