@@ -90,7 +90,46 @@ export const search = async (text, queryField, rating, order) => {
         }
 
         return joinedData;
-    } else if (rating) {
+    } else if (text.length === 0 && queryField === "service") {
+        // get series by provider
+        const series = await getSeriesByProvider(text);
+        
+        // shrink data to just id, name, genre_names, and poster_path
+        let seriesData = await shrinkData(series);
+
+        // get db data
+        const seriesRef = collection(db, "series");
+        let queries = [];
+        queries.push(where("providers", "array-contains", text));
+        if (rating) {
+            queries.push(where("rating", ">=", parseInt(rating)));
+        }
+        const q = query(seriesRef, queries);
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => doc.data());
+        // merge data
+        const joinedData = await joinData(seriesData, data, text);
+
+        if (rating) {
+            // only show series with rating >= rating
+            const filteredData = joinedData.filter(series => series.rating >= rating);
+            return filteredData;
+        }
+
+        if (order) {
+            if (order === "asc") {
+                const sortedData = joinedData.sort((a, b) => a.rating - b.rating);
+                return sortedData;
+            } else {
+                const sortedData = joinedData.sort((a, b) => b.rating - a.rating);
+                return sortedData;
+            }
+        }
+
+        return joinedData;
+    }
+    
+    if (rating) {
         // get db data
         const seriesRef = collection(db, "series");
         const q = query(seriesRef, where("rating", ">=", parseInt(rating)));
