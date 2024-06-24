@@ -2,7 +2,7 @@
 import { db } from "../firebase/config";
 import getSeriesInfo from '@/lib/api/getSeriesInfo';
 import getProvidersById from '@/lib/api/getProvidersById';
-import { collection, addDoc, getDocs, getDoc, doc, updateDoc, arrayUnion, query, where } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, updateDoc, query, where } from "firebase/firestore";
 
 export const addSeries = async (seriesId, title, rating, rating_count, genres, poster_path) => {
     // separate genres to array
@@ -10,15 +10,14 @@ export const addSeries = async (seriesId, title, rating, rating_count, genres, p
 
     // search for providers by seriesId in API
     let providers = await getProvidersById(seriesId);
-    console.log(providers);
     providers = providers.map(provider => provider.provider_name);
 
     // add series to db
     await addDoc(collection(db, "series"), {
-        seriesId,
+        seriesId: parseInt(seriesId),
         title,
-        rating,
-        rating_count,
+        rating: parseFloat(rating),
+        rating_count: parseInt(rating_count),
         genres: genreList,
         poster_path,
         providers
@@ -28,7 +27,6 @@ export const addSeries = async (seriesId, title, rating, rating_count, genres, p
 
 export const fetchSeries = async (id) => {
     // fetch series by seriesId
-    console.log(id);
     const seriesCollection = collection(db, "series");
     const q = query(seriesCollection, where("seriesId", "==", parseInt(id)));
     const querySnapshot = await getDocs(q);
@@ -86,7 +84,6 @@ export const addComment = async (id, comment, rating, username, email) => {
     const querySnapshot = await getDocs(q);
     const seriesData = querySnapshot.docs[0].data();
     const seriesRef = doc(seriesCollection, querySnapshot.docs[0].id);
-    console.log(seriesData, seriesRef);
     const newRating = (seriesData.rating * seriesData.rating_count + rating) / (seriesData.rating_count + 1);
     const newRatingCount = seriesData.rating_count + 1;
     await updateDoc(seriesRef, {
