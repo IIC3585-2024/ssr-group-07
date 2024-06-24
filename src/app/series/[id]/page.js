@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import { fetchSeries, fetchComments, addComment } from '@/lib/db/series';
 import { useAuth } from '../../context/auth';
 
+import styles from './page.module.css'
+
 export default function SeriesPage() {
     const { currentUser } = useAuth();
     const { id } = useParams();
-    const [series, setSeries] = useState(null);
+    const [series, setSeries] = useState({});
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(0);
@@ -15,11 +17,11 @@ export default function SeriesPage() {
 
     useEffect(() => {
         fetchSeries(id).then((series) => {
-            if (series.length === 0) {
+            if (!series) {
                 setLoading(false);
                 return;
             }
-            setSeries(series[0]);
+            setSeries(series);
             setLoading(false);
         });
     }, [id]);
@@ -28,6 +30,21 @@ export default function SeriesPage() {
         fetchComments(id).then(setComments);
     }, [id]);
 
+    const renderStars = (rating) => {
+        const filledStars = Math.floor(rating);
+        const emptyStars = 5 - filledStars;
+        return (
+            <div>
+                {Array.from({ length: filledStars }).map((_, index) => (
+                    <span key={`filled-${index}`} className={styles["star"]}>★</span>
+                ))}
+                {Array.from({ length: emptyStars }).map((_, index) => (
+                    <span key={`empty-${index}`} className={styles["star"]}>☆</span>
+                ))}
+            </div>
+        );
+    }
+
     const createComment = async () => {
         await addComment(id, comment, rating, currentUser.name, currentUser.email);
         setComment("");
@@ -35,11 +52,11 @@ export default function SeriesPage() {
         fetchComments(id).then(setComments);
         
         fetchSeries(id).then((series) => {
-            if (series.length === 0) {
+            if (!series) {
                 setLoading(false);
                 return;
             }
-            setSeries(series[0]);
+            setSeries(series);
             setLoading(false);
         });
     }
@@ -50,39 +67,64 @@ export default function SeriesPage() {
                 <p>Loading...</p>
             ) : (
                 <>
-                    {series.length === 0 ? (
+                    {!series || !series.title ? (
                         <p>Series not found</p>
                     ) : (
-                        <div>
-                            <h1>{series.title}</h1>
-                            <p>{series.description}</p>
-                            <p>Rating: {series.rating}</p>
-                            <p>Rating Count: {series.rating_count}</p>
-                            <p>Genres: {series.genres}</p>
-                            <h2>Comments</h2>
-                            <ul>
-                                {comments && comments.map((comment, index) => (
-                                    <li key={index}>
-                                        <p>{comment.comment}</p>
-                                        <p>Rating: {comment.rating}</p>
-                                        <p>By: {comment.username}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                            <input
-                                type="text"
-                                placeholder="Comment"
-                                value={comment}
-                                onChange={e => setComment(e.target.value)}
-                            />
-                            <input
-                                type="number"
-                                placeholder="Rating"
-                                value={rating}
-                                onChange={e => setRating(e.target.value)}
-                            />
-                            <button onClick={createComment}>Add Comment</button>
+<div className={styles["serie-detail-container"]}>
+    <div className={styles.container}>
+        <img className={styles.cover} src={`https://image.tmdb.org/t/p/w500${series.poster_path}`} alt="book"/>
+        <div>
+            <h1 className={styles.title} >{series.title}</h1>
+            <p>Genres: {series.genres.join(', ')}</p>
+            <div className={styles["ratings-container"]}>
+            <ul className={styles["ratings"]}>
+                <li className={styles["rating-avg"]}>
+                {renderStars(series.rating)} <span className={styles["average"]}>{series.rating.toFixed(1)}</span>
+                </li>
+            </ul>
+            <p>{series.rating_count} Ratings</p>
+            </div>
+            <p className={styles["description"]}>{series.description}</p>
+        </div>
+    </div>
+    <div className={styles["comments-section"]}>
+        <h2 className={styles.title}>Comments</h2>
+        
+        <div className={styles["comment-form"]}>
+            <input
+                type="number"
+                className="input-text-field margin-5"
+                placeholder="Rating"
+                value={rating}
+                onChange={e => setRating(parseInt(e.target.value))}
+            />
+            <textarea
+                type="text"
+                className={`input-text-field margin-5 ${styles["textarea"]}`}
+                placeholder="Comment"
+                value={comment}
+                onChange={e => setComment(e.target.value)}
+            />
+            <button className="btn margin-5" onClick={createComment}>Add Comment</button>
+        </div>
+
+        <div className={styles["comments-container"]}>
+            {comments && comments.map((comment, index) => (
+                <div key={index} className={styles["comment-item"]}>
+                    <div className={styles["comment-content"]}>
+                        <div className={styles["comment-meta"]}>
+                            <h3 className={styles["comment-by"]}>{comment.username}</h3>
+                            <span className={styles["comment-rating"]}>{renderStars(comment.rating)}</span>
                         </div>
+                        <p className={styles["comment-text"]}>{comment.comment}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+    </div>
+</div>
+
                     )}
                 </>
             )}

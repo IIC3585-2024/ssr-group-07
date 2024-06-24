@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link';
 import { useState } from "react";
 import { search } from "@/lib/db/search";
 import SeriesCard from "./seriesCard";
@@ -55,10 +56,17 @@ export default function SearchPage() {
             </select>
             <button className="btn margin-5" onClick={clientSearch}>Search</button>
             {errorMessage && <p>{errorMessage}</p>}
-            <div class="results-container">
-                <div class="gallery">
+            <div className="results-container">
+                <div className="gallery">
                 {results.map((result, index) => (
-                    <SeriesCard key={index} series={result} id={result.id} />
+                    <Link href={`/series/${result.id}`}>
+                        <SeriesCard 
+                            key={index}
+                            series={result}
+                            id={result.id}
+                        />
+                    </Link>
+                    
                 ))}
                 </div>
             </div>

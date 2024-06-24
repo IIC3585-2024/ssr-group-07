@@ -1,5 +1,6 @@
 'use server'
 import { db } from "../firebase/config";
+import getSeriesInfo from '@/lib/api/getSeriesInfo';
 import { collection, addDoc, getDocs, getDoc, doc, updateDoc, arrayUnion, query, where } from "firebase/firestore";
 
 export const addSeries = async (seriesId, title, rating, rating_count, genres, poster_path) => {
@@ -35,7 +36,7 @@ export const fetchSeries = async (id) => {
             rating: 0,
             rating_count: 0,
             genres: apiData.genre_names,
-            poster_path: apiData.poster_path
+            poster_path: apiData.poster_path,
         }
     }
 
