@@ -16,10 +16,21 @@ export default async function getSeriesByName(name) {
 
     // add genre names to series
     data.results.forEach(series => {
+        if (series.genre_names) {
         series.genre_names = series.genre_ids.map(id => {
-            const genre = genreList.genres.find(genre => genre.id === id)
-            return genre.name
+            const genre = genreList.genres.find(genre => genre.id === id);
+            return genre.name;
         }).join(", ")
+        } else if (series.genre_ids.length > 0) {
+            series.genre_ids = series.genre_ids.map(id => {
+                const genre = genreList.genres.find(genre => genre.id === id);
+                if (genre){
+                    return genre.name;
+                }
+            }).join(", ")
+        } else if (series.genre_ids.length === 0) {
+            series.genre_names = [];
+        }
     })
     
     return data.results

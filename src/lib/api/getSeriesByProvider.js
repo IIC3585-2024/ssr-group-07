@@ -8,7 +8,7 @@ export default async function getSeriesByProvider(provider) {
         }
     }
 
-    const response = await fetch(`https://api.themoviedb.org/3/discover/tv?with_watch_providers=${provider}&watch_region=US&language=en-US`, options)
+    const response = await fetch(`https://api.themoviedb.org/3/discover/tv?with_watch_providers=${provider}&watch_region=CL&language=en-US`, options)
     const data = await response.json()
     return data.results
 }

@@ -10,5 +10,10 @@ export default async function getProvidersById(id) {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    return data.results.CL.flatrate;
+
+    if (data.results.CL) {
+        return data.results.CL.flatrate;
+    }
+
+    return data.results.US.flatrate;
   }
