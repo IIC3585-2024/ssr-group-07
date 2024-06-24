@@ -24,12 +24,12 @@
     margin-top: 0.5rem;
 }
 
-.ratings-container {
+.ratings-container, .providers-section {
     margin-top: 1.5rem;
     text-align: left;
 }
 
-.ratings {
+.ratings, .providers-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -51,6 +51,11 @@
 
 .average {
     margin-left: 0.3rem;
+}
+
+.providers-img {
+    width: 2rem;
+    border-radius: 5%;
 }
 
 .description {

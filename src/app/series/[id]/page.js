@@ -3,8 +3,10 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { fetchSeries, fetchComments, addComment } from '@/lib/db/series';
 import { useAuth } from '../../context/auth';
+import getProvidersById from '@/lib/api/getProvidersById';
 
-import styles from './page.module.css'
+
+import styles from './page.module.css';
 
 export default function SeriesPage() {
     const { currentUser } = useAuth();
@@ -14,6 +16,7 @@ export default function SeriesPage() {
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [providers, setProviders] = useState([]);
 
     useEffect(() => {
         fetchSeries(id).then((series) => {
@@ -28,6 +31,10 @@ export default function SeriesPage() {
 
     useEffect(() => {
         fetchComments(id).then(setComments);
+    }, [id]);
+
+    useEffect(() => {
+        getProvidersById(id).then(setProviders);
     }, [id]);
 
     const renderStars = (rating) => {
@@ -83,6 +90,20 @@ export default function SeriesPage() {
                 </li>
             </ul>
             <p>{series.rating_count} Ratings</p>
+            </div>
+            <div className={styles["providers-section"]}>
+                <h4>Watch Providers</h4>
+                {providers.length > 0 ? (
+                    <ul className={styles["providers-list"]}>
+                        {providers.map((provider, index) => (
+                            <li key={index} className={styles["provider-item"]}>
+                                <img className={styles["providers-img"]} src={`https://image.tmdb.org/t/p/w200${provider.logo_path}`} alt={provider.provider_name} />
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No providers available</p>
+                )}
             </div>
             <p className={styles["description"]}>{series.description}</p>
         </div>
