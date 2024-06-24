@@ -56,8 +56,8 @@ export default function SearchPage() {
             </select>
             <button className="btn margin-5" onClick={clientSearch}>Search</button>
             {errorMessage && <p>{errorMessage}</p>}
-            <div class="results-container">
-                <div class="gallery">
+            <div className="results-container">
+                <div className="gallery">
                 {results.map((result, index) => (
                     <Link href={`/series/${result.id}`}>
                         <SeriesCard 
