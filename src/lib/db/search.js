@@ -20,19 +20,16 @@ export const search = async (text, queryField, rating, order) => {
         // shrink data to just id, name, genre_names, and poster_path
         let seriesData = await shrinkData(series);
         
-        
-        if (rating) {
-            // get db data
-            const seriesRef = collection(db, "series");
-            let queries = [];
-            queries.push(where("rating", ">=", rating));
-            const q = query(seriesRef, queries);
-            const querySnapshot = await getDocs(q);
-            const data = querySnapshot.docs.map(doc => doc.data());
+        // get db data
+        const seriesRef = collection(db, "series");
+        let queries = [];
+        queries.push(where("rating", ">=", rating));
+        const q = query(seriesRef, queries);
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => doc.data());
 
-            // merge data
-            seriesData = mergeData(seriesData, data);
-        }
+        // merge data
+        seriesData = mergeData(seriesData, data);
 
         if (rating) {
             // only show series with rating >= rating
@@ -125,7 +122,7 @@ async function shrinkData(series) {
 
 function mergeData(seriesData, dbData) {
     return seriesData.map(series => {
-        const data = dbData.find(data => data.seriesId === series.id);
+        const data = dbData.find(data => parseInt(data.seriesId) === parseInt(series.id));
         if (data) {
             return {
                 ...series,
