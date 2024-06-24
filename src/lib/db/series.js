@@ -36,7 +36,7 @@ export const fetchSeries = async (id) => {
             rating: 0,
             rating_count: 0,
             genres: apiData.genre_names,
-            poster_path: apiData.poster_path
+            poster_path: apiData.poster_path,
         }
     }
 
