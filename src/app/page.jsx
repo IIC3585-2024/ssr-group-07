@@ -30,6 +30,12 @@ export default function Page() {
         });
     }
 
+    const handleEnterSearch = (e) => {
+        if (e.key === 'Enter') {
+            clientSearch();
+        }
+    }
+
     useEffect(() => {
         fetch("/api/genres")
             .then(res => res.json())
@@ -48,6 +54,7 @@ export default function Page() {
                 placeholder="Search"
                 value={text}
                 onChange={e => setText(e.target.value)}
+                onKeyDown={e => handleEnterSearch(e)}
             />
             )
         } else if (queryField === 'genre' && genres.length > 0) {
