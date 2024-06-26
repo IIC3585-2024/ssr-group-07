@@ -20,3 +20,10 @@
     height: auto;
     object-fit: cover;
 }
+
+.missing-cover {
+    background-color: #131313;
+    height: 22rem;
+    align-content: center;
+    color: #ffffff6d;
+}
