@@ -1,4 +1,3 @@
-// src/app/series/[id]/page.js
 import { fetchSeries, fetchComments } from '@/lib/db/series';
 import getProvidersById from '@/lib/api/getProvidersById';
 import getSeriesInfo from '@/lib/api/getSeriesInfo';
