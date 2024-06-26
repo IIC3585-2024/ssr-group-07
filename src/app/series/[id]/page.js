@@ -7,6 +7,8 @@ import getProvidersById from '@/lib/api/getProvidersById';
 
 
 import styles from './page.module.css';
+import getSeriesInfo from '@/lib/api/getSeriesInfo';
+import SeasonTable from '@/app/components/SeasonTable';
 
 export default function SeriesPage() {
     const { currentUser } = useAuth();
@@ -17,6 +19,7 @@ export default function SeriesPage() {
     const [rating, setRating] = useState(0);
     const [loading, setLoading] = useState(true);
     const [providers, setProviders] = useState([]);
+    const [seasons, setSeasons] = useState([]);
 
     useEffect(() => {
         fetchSeries(id).then((series) => {
@@ -36,6 +39,12 @@ export default function SeriesPage() {
     useEffect(() => {
         getProvidersById(id).then(setProviders);
     }, [id]);
+
+    useEffect(() => {
+        getSeriesInfo(id).then(
+            (data) => setSeasons(data.seasons)
+        );
+    }, [id])
 
     const renderStars = (rating) => {
         const filledStars = Math.floor(rating);
@@ -106,6 +115,7 @@ export default function SeriesPage() {
                 )}
             </div>
             <p className={styles["description"]}>{series.description}</p>
+            <SeasonTable seasons={seasons} />
         </div>
     </div>
     <div className={styles["comments-section"]}>
