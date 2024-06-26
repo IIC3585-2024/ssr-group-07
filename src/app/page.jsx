@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { search } from "@/lib/db/search";
-import SeriesCard from "./seriesCard";
+import SeriesCard from "./components/seriesCard";
 
 export default function Page() {
     const [text, setText] = useState("");
@@ -96,7 +96,7 @@ export default function Page() {
             <div className="results-container">
                 <div className="gallery">
                 {results.map((result, index) => (
-                    <Link href={`/series/${result.id}`}>
+                    <Link href={`/series/${result.id}`} key={index}>
                         <SeriesCard 
                             key={index}
                             series={result}
