@@ -15,5 +15,5 @@ export default async function getProvidersById(id) {
         return data.results.CL.flatrate;
     }
 
-    return data.results.US.flatrate;
+    return [];
   }
