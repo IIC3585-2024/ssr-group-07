@@ -9,8 +9,12 @@ export const addSeries = async (seriesId, title, rating, rating_count, genres, p
     const genreList = genres.split(", ");
 
     // search for providers by seriesId in API
-    let providers = await getProvidersById(seriesId);
+    let providers = await getProvidersById(parseInt(seriesId));
     providers = providers.map(provider => provider.provider_name);
+
+    if (providers.length === 0) {
+        providers = [];
+    }
 
     // add series to db
     await addDoc(collection(db, "series"), {
